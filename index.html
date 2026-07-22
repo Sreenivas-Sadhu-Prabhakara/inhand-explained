@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+  <title>How In-Hand Salary Is Calculated From CTC — The Idea Behind inhand</title>
+  <meta name="description" content="An animated walkthrough of how your Indian CTC becomes monthly in-hand pay — the salary waterfall, EPF, EPS, gratuity, professional tax and TDS, each with the rule behind it — and why a calculator that never sends your salary anywhere is possible.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/inhand-explained/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Sreenivas Sadhu Prabhakara">
+  <meta name="keywords" content="how is in hand salary calculated, ctc to in hand explained, salary waterfall, ctc breakup explained, epf eps gratuity professional tax tds, take home salary india explained, private salary calculator">
+
+  <meta name="theme-color" content="#171C21" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#EEF1F4" media="(prefers-color-scheme: light)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="inhand explained">
+  <meta property="og:title" content="How In-Hand Salary Is Calculated From CTC — The Idea Behind inhand">
+  <meta property="og:description" content="Watch your CTC step down through every statutory deduction to one in-hand figure — an animated explainer, with the rule behind each line, and a salary that never leaves your browser.">
+  <meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/inhand-explained/">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/inhand-explained/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A salary waterfall: steel blocks stepping down from CTC through deductions to one tangerine in-hand block.">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How In-Hand Salary Is Calculated From CTC — The Idea Behind inhand">
+  <meta name="twitter:description" content="An animated explainer for the salary waterfall — CTC to in-hand, every deduction cited, computed privately in your browser.">
+  <meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/inhand-explained/og-image.png">
+  <meta name="twitter:image:alt" content="The salary waterfall from CTC to in-hand.">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "inhand explained",
+    "description": "An animated single-page explainer for how an Indian CTC is turned into monthly in-hand salary — the salary waterfall, EPF, EPS, gratuity, professional tax and TDS — and how a calculator that keeps your salary on-device works. Companion to the inhand calculator.",
+    "url": "https://sreenivas-sadhu-prabhakara.github.io/inhand-explained/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any (modern web browser)",
+    "browserRequirements": "Requires a modern web browser.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Person", "name": "Sreenivas Sadhu Prabhakara" },
+    "softwareVersion": "0.1.0",
+    "featureList": [
+      "Animated salary waterfall from CTC to in-hand",
+      "Explains EPF, EPS, gratuity, professional tax and monthly TDS",
+      "Shows the statutory rule behind each deduction",
+      "Explains why connect-src 'none' keeps your salary on-device",
+      "Links to the live inhand calculator"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is in-hand salary calculated from CTC?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "CTC is the total cost to the employer, not your pay. First you remove the parts that are a cost but never cash to you — the employer's EPF contribution and the gratuity accrual. What remains is your gross cash: basic, HRA and allowances. From that gross you subtract your own deductions — employee EPF (12% of basic), professional tax, and monthly TDS (annual income tax divided by twelve). The figure left is your monthly in-hand. This page animates that step-down as a salary waterfall."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does CTC look so much bigger than what I actually receive?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because CTC bundles employer costs that never reach your bank account (employer EPF and gratuity accrual) with variable pay and reimbursements, then still has your own EPF, professional tax and income tax deducted before payout. Each of those is a separate, rule-bound step — the waterfall makes every one of them visible instead of hiding the arithmetic behind one number."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can a salary calculator really keep my numbers private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, when it is built so it cannot send data. The inhand calculator sets a Content-Security-Policy of connect-src 'none', which makes the browser itself block every network request — fetch, XHR and WebSocket. There is nowhere for a typed salary to go. That is an enforced guarantee, not a privacy promise in a policy document."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this financial advice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. This page and the inhand calculator produce an estimate to help you read an offer letter, not tax, legal or investment advice. Figures are modelled for AY 2026-27 (FY 2025-26) only, employer structures vary, and TDS is shown as annual tax divided by twelve. Verify against your actual payslip and a qualified professional."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#cta">Skip to the calculator link</a>
+
+  <div class="progress" aria-hidden="true"><span class="progress__bar" id="progressBar"></span></div>
+
+  <header class="site-head">
+    <a class="brand" href="#top">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="var(--panel)"/>
+        <rect x="6"  y="9"  width="4" height="17" rx="1" fill="var(--steel)"/>
+        <rect x="12" y="13" width="4" height="13" rx="1" fill="var(--steel)"/>
+        <rect x="18" y="17" width="4" height="9"  rx="1" fill="var(--steel)"/>
+        <rect x="24" y="20" width="4" height="6"  rx="1" fill="var(--tangerine)"/>
+      </svg>
+      <span class="brand__name">inhand<span class="brand__tag">explained</span></span>
+    </a>
+    <a class="head-cta" href="https://sreenivas-sadhu-prabhakara.github.io/inhand/" rel="noopener">Open the calculator</a>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HOOK ============ -->
+    <section class="scene scene--hook" id="hook" data-scene>
+      <div class="scene__inner">
+        <p class="eyebrow reveal">The idea behind inhand</p>
+        <h1 class="hook__title reveal">How In-Hand Salary Is Calculated From CTC — Watch The Waterfall, Line By Line</h1>
+        <p class="hook__lede reveal">
+          Your offer letter shows one big number. Your bank account shows a much smaller one.
+          This is the story of every rupee that goes missing in between — animated, honest, and
+          computed on a page that <strong>never sends your salary anywhere</strong>.
+        </p>
+        <div class="hook__figures reveal">
+          <div class="bignum">
+            <span class="bignum__label">Offer letter says</span>
+            <span class="bignum__val bignum__val--ctc" id="ctcNum">&#8377;18,00,000</span>
+            <span class="bignum__note">annual CTC</span>
+          </div>
+          <span class="hook__arrow" aria-hidden="true">&darr;</span>
+          <div class="bignum">
+            <span class="bignum__label">Bank account gets</span>
+            <span class="bignum__val bignum__val--inhand" id="inhandNum">&#8377;1,12,900</span>
+            <span class="bignum__note">roughly, per month</span>
+          </div>
+        </div>
+        <p class="scroll-cue reveal" aria-hidden="true">Scroll to follow the money <span class="scroll-cue__chev">&darr;</span></p>
+      </div>
+    </section>
+
+    <!-- ============ PROBLEM ============ -->
+    <section class="scene scene--problem" id="problem" data-scene>
+      <div class="scene__inner">
+        <h2 class="scene__h reveal">The problem: nobody shows you the arithmetic</h2>
+        <p class="scene__lede reveal">
+          "But what's my in-hand?" is the one question an offer letter never answers. Search for a
+          calculator and you get a black box that swallows your salary and hands back a number you
+          can't check.
+        </p>
+        <ul class="pain-list">
+          <li class="pain reveal"><span class="pain__mark" aria-hidden="true">&times;</span><span>CTC hides employer costs — money spent <em>on</em> you that never becomes cash <em>for</em> you.</span></li>
+          <li class="pain reveal"><span class="pain__mark" aria-hidden="true">&times;</span><span>Every deduction has a statutory rule behind it — but the rule is nowhere on the screen.</span></li>
+          <li class="pain reveal"><span class="pain__mark" aria-hidden="true">&times;</span><span>Most online calculators log the exact salary you type. You wanted an answer, not a lead form.</span></li>
+        </ul>
+        <p class="scene__foot reveal">So we built the arithmetic in the open — and animated it, so you can watch it happen.</p>
+      </div>
+    </section>
+
+    <!-- ============ THE WATERFALL (core motif) ============ -->
+    <section class="scene scene--waterfall" id="waterfall" data-scene>
+      <div class="scene__inner">
+        <h2 class="scene__h reveal">The salary waterfall</h2>
+        <p class="scene__lede reveal">
+          Read it left to right. The tall gunmetal block is your CTC. Each step down is one deduction,
+          with the rule behind it. The single warm block at the end is what actually reaches you —
+          the only number you came for.
+        </p>
+
+        <div class="wf" role="img" aria-label="Salary waterfall: an eighteen-lakh CTC steps down through employer EPF and gratuity, then employee EPF, professional tax and TDS, to a monthly in-hand of about one lakh thirteen thousand rupees.">
+          <svg class="wf__svg" viewBox="0 0 760 340" id="wfSvg" aria-hidden="true">
+            <!-- connectors + bars are populated/animated by app.js; static fallback drawn here -->
+            <g id="wfConns"></g>
+            <g id="wfBars"></g>
+          </svg>
+        </div>
+
+        <ol class="wf-legend">
+          <li class="wf-legend__item reveal" data-step="0"><span class="chip chip--ctc">CTC</span> the full cost to your employer</li>
+          <li class="wf-legend__item reveal" data-step="1"><span class="chip">&minus; Employer EPF &amp; EPS</span> a cost to them, not cash to you <em>&mdash; EPF Scheme 1952, para&nbsp;29</em></li>
+          <li class="wf-legend__item reveal" data-step="2"><span class="chip">&minus; Gratuity accrual</span> 4.81% of basic, set aside <em>&mdash; Payment of Gratuity Act 1972, s.4</em></li>
+          <li class="wf-legend__item reveal" data-step="3"><span class="chip">&minus; Your EPF (12%)</span> your own retirement share <em>&mdash; EPF Scheme, para&nbsp;29</em></li>
+          <li class="wf-legend__item reveal" data-step="4"><span class="chip">&minus; Professional tax</span> your state's levy <em>&mdash; Article 276(2), state PT Act</em></li>
+          <li class="wf-legend__item reveal" data-step="5"><span class="chip">&minus; Income tax (TDS)</span> annual tax &divide; 12 <em>&mdash; Finance Act 2025, AY 2026-27</em></li>
+          <li class="wf-legend__item reveal" data-step="6"><span class="chip chip--inhand">= In-hand</span> what lands in your account</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ EVERY LINE CITED ============ -->
+    <section class="scene scene--cited" id="cited" data-scene>
+      <div class="scene__inner">
+        <h2 class="scene__h reveal">Every deduction shows the rule behind it</h2>
+        <p class="scene__lede reveal">
+          A number you can't trace is a number you can't trust. In the calculator, every line in the
+          ledger expands to its formula and the statute it comes from, with the date it was verified.
+        </p>
+        <div class="cited-cards">
+          <article class="ccard reveal">
+            <h3 class="ccard__name">Employer EPS split</h3>
+            <p class="ccard__rule">8.33% of pensionable wage, capped at a &#8377;15,000/month ceiling.</p>
+            <p class="ccard__cite">EPS &mdash; GSR&nbsp;609(E), eff. 01-09-2014</p>
+          </article>
+          <article class="ccard reveal">
+            <h3 class="ccard__name">Gratuity accrual</h3>
+            <p class="ccard__rule">15 &divide; 26 &divide; 12 = 4.81% of basic, accrued each month.</p>
+            <p class="ccard__cite">Payment of Gratuity Act 1972, s.4(2)</p>
+          </article>
+          <article class="ccard reveal">
+            <h3 class="ccard__name">87A rebate &amp; slabs</h3>
+            <p class="ccard__rule">New-regime slabs, rebate, standard deduction and marginal relief.</p>
+            <p class="ccard__cite">Finance Act 2025 &mdash; AY 2026-27 (FY 2025-26)</p>
+          </article>
+          <article class="ccard reveal">
+            <h3 class="ccard__name">Professional tax</h3>
+            <p class="ccard__rule">Per-state slabs, capped at &#8377;2,500/year, with a manual override.</p>
+            <p class="ccard__cite">Article 276(2) &mdash; state PT Acts, verified per state</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRIVACY (enforced) ============ -->
+    <section class="scene scene--privacy" id="privacy" data-scene>
+      <div class="scene__inner">
+        <h2 class="scene__h reveal">Your salary physically cannot leave the browser</h2>
+        <p class="scene__lede reveal">
+          Most sites <em>promise</em> privacy in a policy. inhand <em>enforces</em> it in the page
+          itself: one line of security policy makes the browser block every outbound request.
+        </p>
+
+        <div class="privacy-demo reveal" id="privacyDemo">
+          <code class="privacy-demo__csp">connect-src <span class="tk-str">'none'</span></code>
+          <div class="privacy-demo__stage" aria-hidden="true">
+            <span class="pd-node pd-node--you">your salary</span>
+            <span class="pd-wire"><span class="pd-packet" id="pdPacket"></span></span>
+            <span class="pd-wall" id="pdWall"><span class="pd-wall__x">&times;</span></span>
+            <span class="pd-node pd-node--net">any server</span>
+          </div>
+          <p class="privacy-demo__caption" id="pdCaption" aria-live="polite">The browser blocks the send. Nothing reaches the network.</p>
+        </div>
+
+        <ul class="privacy-facts">
+          <li class="reveal"><span class="tick" aria-hidden="true">&#10003;</span> No <code>fetch</code>, no XHR, no WebSocket &mdash; the browser rejects them all.</li>
+          <li class="reveal"><span class="tick" aria-hidden="true">&#10003;</span> No analytics, no CDN, no external fonts. Everything is same-origin.</li>
+          <li class="reveal"><span class="tick" aria-hidden="true">&#10003;</span> Saved offers live only in this browser's <code>localStorage</code>.</li>
+        </ul>
+        <p class="scene__foot reveal">This explainer is built the same way &mdash; check your network tab: it stays empty.</p>
+      </div>
+    </section>
+
+    <!-- ============ FEATURE TOUR ============ -->
+    <section class="scene scene--tour" id="tour" data-scene>
+      <div class="scene__inner">
+        <h2 class="scene__h reveal">What the calculator does</h2>
+        <div class="tour-grid">
+          <article class="tour reveal"><span class="tour__ic" aria-hidden="true">&#9776;</span><h3>Editable CTC breakup</h3><p>Basic, HRA and special allowance with a flag when the parts don't sum to CTC.</p></article>
+          <article class="tour reveal"><span class="tour__ic" aria-hidden="true">&#8646;</span><h3>New &amp; old regime</h3><p>AY 2026-27, with HRA exemption, 80C, 87A rebate, surcharge and marginal relief.</p></article>
+          <article class="tour reveal"><span class="tour__ic" aria-hidden="true">&#9678;</span><h3>State professional tax</h3><p>Verified slabs with a verified-on date, plus a manual override for any state.</p></article>
+          <article class="tour reveal"><span class="tour__ic" aria-hidden="true">&#8214;</span><h3>Compare two offers</h3><p>Offer A vs Offer B, with the monthly in-hand delta and per-line differences.</p></article>
+          <article class="tour reveal"><span class="tour__ic" aria-hidden="true">&#8595;</span><h3>Print &amp; CSV export</h3><p>A payslip-style print sheet and an RFC-4180 CSV of every ledger line.</p></article>
+          <article class="tour reveal"><span class="tour__ic" aria-hidden="true">&#9873;</span><h3>Honest by default</h3><p>An estimate, not a payslip &mdash; every limit stated on-screen, not buried.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="scene scene--cta" id="cta" data-scene>
+      <div class="scene__inner cta-inner">
+        <svg class="cta__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="var(--panel)"/>
+          <rect x="6"  y="9"  width="4" height="17" rx="1" fill="var(--steel)"/>
+          <rect x="12" y="13" width="4" height="13" rx="1" fill="var(--steel)"/>
+          <rect x="18" y="17" width="4" height="9"  rx="1" fill="var(--steel)"/>
+          <rect x="24" y="20" width="4" height="6"  rx="1" fill="var(--tangerine)"/>
+        </svg>
+        <h2 class="cta__title reveal">Decode your own offer letter</h2>
+        <p class="cta__lede reveal">
+          Paste your CTC and watch your own waterfall &mdash; every deduction cited, both tax regimes,
+          two offers side by side. Free, offline, and your salary never leaves the browser.
+        </p>
+        <a class="cta__btn" href="https://sreenivas-sadhu-prabhakara.github.io/inhand/" rel="noopener">
+          Open the inhand calculator &rarr;
+        </a>
+        <p class="cta__sub reveal">Opens the live tool &middot; no sign-up &middot; runs 100% in your browser</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__inner">
+      <p class="foot__disclaimer">
+        <strong>An explainer for an estimate &mdash; not tax, legal, or investment advice.</strong>
+        The figures shown here and in the inhand calculator model <strong>AY 2026-27 (FY 2025-26)</strong>
+        only. Employer CTC structures vary; TDS is shown as annual tax &divide; 12, not the exact
+        Section-192 computation; professional-tax slabs change by state and carry a verified-on date
+        with a manual override. Gratuity is an employer-cost accrual (4.81% of basic), normally payable
+        only after 5 years of continuous service &mdash; not monthly cash. The example numbers on this
+        page are illustrative. Verify any real figure against your payslip and a qualified professional.
+      </p>
+      <p class="foot__meta">
+        <a href="https://sreenivas-sadhu-prabhakara.github.io/inhand/" rel="noopener">The inhand calculator</a>
+        <span class="foot__dot">&middot;</span>
+        <span>Runs 100% offline</span><span class="foot__dot">&middot;</span>
+        <span>Nothing you do here leaves the browser</span><span class="foot__dot">&middot;</span>
+        <span>MIT&nbsp;License</span><span class="foot__dot">&middot;</span>
+        <span>&copy; 2026 Sreenivas&nbsp;Sadhu&nbsp;Prabhakara</span>
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
